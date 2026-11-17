@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mini Google compares keyword frequency with PageRank across six pages. A classroom search engine demo.">
+  <meta name="theme-color" content="#ffffff">
+  <title>Mini Google</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="pages.js" defer></script>
+  <script src="search.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="search-icon" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.4 15.4 4.1 4.1"/></symbol>
+    <symbol id="graph-icon" viewBox="0 0 24 24"><path d="m8 7.3 8 3.5m-8 5.9 8-3.5"/><circle cx="6" cy="6.5" r="2.5"/><circle cx="6" cy="17.5" r="2.5"/><circle cx="18" cy="12" r="2.5"/></symbol>
+    <symbol id="close-icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="back-icon" viewBox="0 0 24 24"><path d="m10 6-6 6 6 6M4 12h16"/></symbol>
+    <symbol id="external-icon" viewBox="0 0 24 24"><path d="M13 5h6v6m0-6-9 9m8-1v5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <a class="header-brand" href="#" aria-label="Mini Google home" hidden></a>
+    <nav aria-label="Project">
+      <button type="button" class="text-button" data-dialog="about">About</button>
+      <button type="button" class="rank-button" data-dialog="rank"><svg class="icon" aria-hidden="true"><use href="#graph-icon"/></svg>PageRank</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <div class="search-area">
+      <h1 class="home-brand" aria-label="Mini Google"></h1>
+      <form id="search-form" role="search">
+        <div class="search-box">
+          <svg class="icon search-icon" aria-hidden="true"><use href="#search-icon"/></svg>
+          <input id="query" name="q" type="text" aria-label="Search Mini Google" spellcheck="false" autocomplete="off" enterkeyhint="search" maxlength="200" required>
+          <kbd class="shortcut" aria-hidden="true">/</kbd>
+          <button type="button" id="clear" class="icon-button" aria-label="Clear search" hidden><svg class="icon" aria-hidden="true"><use href="#close-icon"/></svg></button>
+          <button type="submit" class="icon-button inline-submit" aria-label="Search" hidden><svg class="icon" aria-hidden="true"><use href="#search-icon"/></svg></button>
+        </div>
+        <div class="home-actions">
+          <button type="submit" class="search-action">Mini Google Search</button>
+          <button type="button" class="search-action" id="lucky">I'm Feeling Lucky</button>
+        </div>
+      </form>
+      <div class="suggestions" aria-label="Example searches">
+        <span>Try searching:</span>
+        <a href="#q=pizza">pizza</a>
+        <a href="#q=pune">pune</a>
+        <a href="#q=chai">chai</a>
+      </div>
+      <figure class="founders-photo">
+        <img src="assets/pizza-ranking-committee.jpg" width="900" height="600" alt="Sergey Brin inspecting pizza with a magnifying glass while Larry Page judges another slice">
+        <figcaption><strong>The pizza ranking committee</strong><span>Sergey Brin &amp; Larry Page · AI parody</span></figcaption>
+      </figure>
+    </div>
+    <section id="results" class="view" aria-label="Search results" hidden></section>
+    <article id="page" class="view" hidden></article>
+    <noscript><p class="no-script">Enable JavaScript to search and calculate PageRank.</p></noscript>
+  </main>
+
+  <footer class="footer">
+    <span>Mini Google <span class="footer-dot" aria-hidden="true">·</span> Class project</span>
+    <button type="button" class="text-button" data-dialog="rank"><span class="status-dot" aria-hidden="true"></span>6 indexed pages</button>
+  </footer>
+
+  <dialog id="about" aria-labelledby="about-title">
+    <div class="dialog-head">
+      <div><span class="eyebrow">Class project</span><h2 id="about-title">About Mini Google</h2></div>
+      <form method="dialog"><button class="icon-button" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#close-icon"/></svg></button></form>
+    </div>
+    <p>Mini Google matches every word in your query against the six supplied pages. The left column ranks matches by total keyword hits; the right ranks the same matches by PageRank.</p>
+    <p>PageRank measures a page’s importance from incoming links. A link from a highly ranked page carries more weight, and a page splits its vote among its outgoing links.</p>
+    <p class="last-paragraph">Read <a href="https://research.google/pubs/the-anatomy-of-a-large-scale-hypertextual-web-search-engine/" target="_blank" rel="noopener noreferrer">the original search engine paper</a> by Sergey Brin and Larry Page.</p>
+  </dialog>
+
+  <dialog id="rank" class="rank-dialog" aria-labelledby="rank-title">
+    <div class="dialog-head">
+      <div><span class="eyebrow">Search index</span><h2 id="rank-title">PageRank scores</h2></div>
+      <form method="dialog"><button class="icon-button" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#close-icon"/></svg></button></form>
+    </div>
+    <p>The six pages are ranked by their links. The number of times a word appears does not change the score.</p>
+    <div id="rank-table"></div>
+    <div class="rank-note" id="rank-note"></div>
+  </dialog>
+</body>
+</html>
